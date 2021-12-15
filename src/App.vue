@@ -1,13 +1,43 @@
 <template>
   <div id="app">
-    <CustomSelect/>
+    <CustomSelect
+        v-model="myValueInCS"
+        :items="itemsExample"
+    />
   </div>
 </template>
 
 <script>
 
+import CustomSelect from './components/CustomSelect'
 export default {
-  name: 'App'
+  name: 'App',
+  components: { CustomSelect },
+  data: () => ({
+    myValueInCS: null,
+    itemsExample: [
+      {
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "title": "quis ut nam facilis et officia qui",
+        "completed": false
+      },
+      {
+        "id": 3,
+        "title": "fugiat veniam minus",
+        "completed": false
+      },
+      {
+        "id": 4,
+        "title": "et porro tempora",
+        "completed": true
+      }
+    ]
+  })
 }
 </script>
 

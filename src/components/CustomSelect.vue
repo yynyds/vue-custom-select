@@ -1,10 +1,14 @@
 <template>
-  <el-select v-model="value" placeholder="Select">
+  <el-select
+      v-model="selected"
+      placeholder="Select"
+      clearable
+      @change="onChange">
     <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
+        v-for="item in items"
+        :key="item.id"
+        :label="item.title"
+        :value="item.id">
     </el-option>
   </el-select>
 </template>
@@ -12,25 +16,22 @@
 <script>
 export default {
   name: 'CustomSelect',
+  props: {
+    items: {
+      type: Array,
+      default() {
+        return [1, 2, 3]
+      }
+    }
+  },
   data: () => ({
-    options: [{
-      value: 'Option1',
-      label: 'Option1'
-    }, {
-      value: 'Option2',
-      label: 'Option2'
-    }, {
-      value: 'Option3',
-      label: 'Option3'
-    }, {
-      value: 'Option4',
-      label: 'Option4'
-    }, {
-      value: 'Option5',
-      label: 'Option5'
-    }],
-    value: ''
-  })
+    selected: null
+  }),
+  methods: {
+    onChange() {
+      this.$emit('input', this.selected);
+    }
+  }
 }
 </script>
 
