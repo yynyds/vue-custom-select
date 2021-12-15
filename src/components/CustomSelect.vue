@@ -2,13 +2,15 @@
   <el-select
       v-model="selected"
       placeholder="Select"
+      :multiple="isMultiple"
+      :filterable="isFilterable"
       clearable
       @change="onChange">
     <el-option
         v-for="item in items"
-        :key="item.id"
-        :label="item.title"
-        :value="item.id">
+        :key="keyProp ? item[keyProp] : item"
+        :label="labelProp ? item[labelProp] : item"
+        :value="valueProp ? item[valueProp] : item">
     </el-option>
   </el-select>
 </template>
@@ -21,6 +23,36 @@ export default {
       type: Array,
       default() {
         return [1, 2, 3]
+      }
+    },
+    isMultiple: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    isFilterable: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+    labelProp: {
+      type: String,
+      default() {
+        return null
+      }
+    },
+    valueProp: {
+      type: String,
+      default() {
+        return null
+      }
+    },
+    keyProp: {
+      type: String,
+      default() {
+        return null
       }
     }
   },
