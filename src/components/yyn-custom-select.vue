@@ -21,7 +21,7 @@
           ref="yynInput"
           :readonly="!isFilterable"
       >
-      <i class="el-icon-error yyn-close-icon" v-if="!isMultiple && selectedOption" @click="selectedOption = ''"></i>
+      <i class="el-icon-error yyn-close-icon" v-if="!isMultiple && selectedOption" @click="selectedOption = '', $emit('input', '')"></i>
     </div>
     <div v-show="optionsIsVisible" class="yyn-options" ref="yynOptions" style="top: 28px;">
       <p
@@ -65,12 +65,6 @@ export default {
       }
     },
     labelProp: {
-      type: String,
-      default() {
-        return null
-      }
-    },
-    valueProp: {
       type: String,
       default() {
         return null
@@ -132,8 +126,8 @@ export default {
           this.$emit('input', this.selectedTags)
         }
       } else {
-        this.selectedOption = option[this.valueProp] ? option[this.valueProp] : option
-        this.$emit('input', option[this.valueProp] ? option[this.valueProp] : option)
+        this.selectedOption = option[this.labelProp] ? option[this.labelProp] : option
+        this.$emit('input', option[this.labelProp] ? option[this.labelProp] : option)
         this.optionsIsVisible = false
       }
     },
@@ -145,6 +139,7 @@ export default {
           return item !== tag
         }
       })
+      this.$emit('input', this.selectedTags)
       if (this.selectedTags.length === 0) {
         this.$nextTick(()=> { this.resetPlaceHolder(this.placeHolder) })
       }

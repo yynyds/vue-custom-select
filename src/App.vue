@@ -1,26 +1,25 @@
 <template>
   <div id="app">
-<!--    <section id="example-1">
+    <section id="example-1">
       <h1>Example 1 (Single, Filterable)</h1>
       <hr>
       <div class="examples">
         <b>1) Array input</b>:
         <pre>
-          {{itemsExample1}}
+          {{itemsExampleFirst}}
         </pre>
-        <b>2) (labelProp)Property for display in label: 'title'; (valueProp)Property for value in output: 'id'; (keyProp) 'id'</b>
+        <b>2) (labelProp)Property for display in label: 'title'; (keyProp) 'id'</b>
         <br><br>
         <b>3) Output values:</b>
         <br>
-        <pre>{{myValueInCS_1}}</pre>
-        <CustomSelect
-            v-model="myValueInCS_1"
-            :items="itemsExample1"
-            :labelProp="'title'"
-            :valueProp="'id'"
+        <pre>{{resultExampleFirst}}</pre>
+        <yyn-custom-select
+            v-model="resultExampleFirst"
+            :placeHolder="'Example 1'"
+            :items="itemsExampleFirst"
             :keyProp="'id'"
+            :labelProp="'title'"
             :isFilterable="true"
-            :isMultiple="false"
         />
       </div>
     </section>
@@ -30,19 +29,19 @@
       <div class="examples">
         <b>1) Array input</b>:
         <pre>
-          {{itemsExample2}}
+          {{itemsExampleSecond}}
         </pre>
-        <b>2) (labelProp)Property for display in label: 'name'; (valueProp)Property for value in output: 'name'; (keyProp) 'id'</b>
+        <b>2) (labelProp)Property for display in label: 'name'; (keyProp) 'id'</b>
         <br><br>
         <b>3) Output values:</b>
         <br>
-        <pre>{{myValueInCS_2}}</pre>
-        <CustomSelect
-            v-model="myValueInCS_2"
-            :items="itemsExample2"
-            :labelProp="'name'"
-            :valueProp="'name'"
+        <pre>{{resultExampleSecond}}</pre>
+        <yyn-custom-select
+            v-model="resultExampleSecond"
+            :placeHolder="'Example 1'"
+            :items="itemsExampleSecond"
             :keyProp="'id'"
+            :labelProp="'name'"
             :isMultiple="true"
         />
       </div>
@@ -53,32 +52,22 @@
       <div class="examples">
         <b>1) Array input</b>:
         <pre>
-          {{itemsExample3}}
+          {{itemsExampleThird}}
         </pre>
-        <b>2) (labelProp)Property for display in label: -; (valueProp)Property for value in output: -; (keyProp) -</b>
+        <b>2) (labelProp)Property for display in label: -; (keyProp) -</b>
         <br><br>
         <b>3) Output values:</b>
         <br>
-        <pre>{{myValueInCS_3}}</pre>
-        <CustomSelect
-            v-model="myValueInCS_3"
-            :items="itemsExample3"
-            :isFilterable="true"
+        <pre>{{resultExampleThird}}</pre>
+        <yyn-custom-select
+            v-model="resultExampleThird"
+            :placeHolder="'CustomSelect'"
+            :items="itemsExampleThird"
             :isMultiple="true"
+            :isFilterable="true"
         />
       </div>
-    </section>-->
-    <yyn-custom-select
-        v-model="myValue"
-        :placeHolder="'CustomSelect'"
-        :items="itemsExample"
-        :keyProp="'id'"
-        :labelProp="'title'"
-        :valueProp="'title'"
-        :isMultiple="false"
-        :isFilterable="true"
-    />
-    {{myValue}}
+    </section>
   </div>
 </template>
 
@@ -90,8 +79,8 @@ export default {
   components: { YynCustomSelect },
   data: () => ({
     // example 1
-    myValue: null,
-    itemsExample: [
+    resultExampleFirst: null,
+    itemsExampleFirst: [
       {
         "id": 1,
         "title": "delectus aut autem",
@@ -113,6 +102,33 @@ export default {
         "completed": true
       }
     ],
+    // example 2
+    resultExampleSecond: null,
+    itemsExampleSecond: [
+      {
+        "id": 1,
+        "name": "delectus",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "name": "quis ut nam facilis et officia qui",
+        "completed": false
+      },
+      {
+        "id": 3,
+        "name": "fugiat veniam minus",
+        "completed": false
+      },
+      {
+        "id": 4,
+        "name": "et porro tempora",
+        "completed": true
+      }
+    ],
+    // example 3 third
+    resultExampleThird: null,
+    itemsExampleThird: ['js', 'vue', 'angular', 'docker', 'nestjs', 'sql']
   })
 }
 </script>
@@ -128,5 +144,8 @@ export default {
 }
 .examples {
   text-align: left;
+}
+pre {
+  background-color: #ededed;
 }
 </style>
