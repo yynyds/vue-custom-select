@@ -73,6 +73,62 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+input {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #bdbdbd;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+}
+.yyn-select {
+  position: relative;
+  width: 220px;
+}
+.yyn-placeholder {
+  display: block;
+  margin: 0;
+  padding: 3px;
+  width: -webkit-fill-available;
+}
+.yyn-options {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  width: fit-content;
+  position: absolute;
+  right: 0;
+  min-width: 220px;
+}
+.yyn-options p {
+  margin: 0;
+  padding: 3px;
+  border-bottom: 1px solid #bdbdbd;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-align: left;
 
+  &:last-child {
+    border-bottom: unset;
+  }
+}
+.yyn-options p:hover {
+  background-color: #409eff;
+  cursor: pointer;
+}
 </style>
