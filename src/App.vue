@@ -78,6 +78,7 @@
         :isMultiple="true"
         :isFilterable="true"
     />
+    {{myValue}}
   </div>
 </template>
 

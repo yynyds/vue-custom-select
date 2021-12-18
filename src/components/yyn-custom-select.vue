@@ -1,6 +1,7 @@
 <template>
   <div class="yyn-select">
     <input
+        v-model="selectedOption"
         class="yyn-placeholder"
         :placeholder="placeHolder"
         @click="optionsIsVisible = true"
@@ -11,6 +12,7 @@
       <p
           v-for="item in items"
           :key="keyProp ? item[keyProp] : item"
+          @click="selectOption(item)"
           class="yyn-item"
       >
         {{labelProp ? item[labelProp] : item}}
@@ -67,9 +69,16 @@ export default {
     }
   },
   data: () => ({
+    selectedOption: null,
     optionsIsVisible: false,
   }),
-  methods: {}
+  methods: {
+    selectOption(option) {
+      this.selectedOption = option[this.valueProp] ? option[this.valueProp] : option
+      this.$emit('input', option[this.valueProp] ? option[this.valueProp] : option)
+      this.optionsIsVisible = false
+    }
+  }
 }
 </script>
 
