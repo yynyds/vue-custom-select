@@ -177,11 +177,36 @@ input:focus {
   justify-content: flex-start;
   flex-wrap: wrap
 }
+.yyn-tag {
+  position: relative;
+  background-color: #ecf5ff;
+  border-color: #d9ecff;
+  height: 32px;
+  padding: 0 16px 0 10px;
+  line-height: 30px;
+  font-size: 12px;
+  color: #409eff;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  box-sizing: border-box;
+  margin: 2px 0 2px 6px;
+  max-width: 100%;
+
+  .yyn-close-icon-tag {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    color: #e56d6d;
+    cursor: pointer;
+  }
+}
 .yyn-selected-tags-wrap {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #bdbdbd;
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 </style>
