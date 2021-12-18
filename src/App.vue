@@ -75,7 +75,7 @@
         :keyProp="'id'"
         :labelProp="'title'"
         :valueProp="'title'"
-        :isMultiple="true"
+        :isMultiple="false"
         :isFilterable="true"
     />
     {{myValue}}

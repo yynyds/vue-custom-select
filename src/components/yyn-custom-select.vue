@@ -2,16 +2,16 @@
   <div class="yyn-select">
     <div class="yyn-selected-tags-wrap" ref="yynTagsWrap">
       <div class="yyn-selected-tags" v-if="isMultiple">
-          <span style="display: contents">
-            <span
-                v-for="tag in selectedTags"
-                :key="keyProp ? tag[keyProp] : tag"
-                class="yyn-tag"
-            >
-              {{labelProp ? tag[labelProp] : tag}}
-              <i class="el-icon-error yyn-close-icon-tag" @click="removeFromSelectedTagsList(tag)"></i>
-            </span>
-          </span>
+        <span style="display: contents">
+          <span
+              v-for="tag in selectedTags"
+              :key="keyProp ? tag[keyProp] : tag"
+              class="yyn-tag"
+          >
+          {{labelProp ? tag[labelProp] : tag}}
+            <i class="el-icon-error yyn-close-icon-tag" @click="removeFromSelectedTagsList(tag)"></i>
+        </span>
+        </span>
       </div>
       <input
           v-model="selectedOption"
@@ -21,6 +21,7 @@
           ref="yynInput"
           :readonly="!isFilterable"
       >
+      <i class="el-icon-error yyn-close-icon" v-if="!isMultiple && selectedOption" @click="selectedOption = ''"></i>
     </div>
     <div v-show="optionsIsVisible" class="yyn-options" ref="yynOptions" style="top: 28px;">
       <p
@@ -85,13 +86,34 @@ export default {
   data: () => ({
     selectedOption: null,
     optionsIsVisible: false,
-    selectedTags: []
+    selectedTags: [],
+    localItems: []
   }),
   computed: {
-    filteredSelectedItems() {
-      return this.items.filter(item => {
-        return !this.selectedTags.includes(item)
-      })
+    filteredSelectedItems: {
+      get() {
+        return this.localItems.filter(item => {
+          return !this.selectedTags.includes(item)
+        })
+      },
+      set(newValue) {
+        this.localItems = newValue
+      }
+    }
+  },
+  watch: {
+    selectedOption(value) {
+      if (value && this.isFilterable) {
+        this.localItems = this.items.filter(item => {
+          if (this.labelProp) {
+            return item[this.labelProp].includes(value)
+          } else {
+            return item.includes(value)
+          }
+        })
+      } else {
+        this.localItems = this.items
+      }
     }
   },
   methods: {
@@ -100,9 +122,11 @@ export default {
         if (!this.selectedTags.includes(option)) {
           this.selectedTags.push(option)
           this.$nextTick(()=> {
-            this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
-            if (this.filteredSelectedItems.length === 0) {
-              this.$refs.yynOptions.style.border = '0px solid'
+            this.changeOptionsTop()
+            this.resetPlaceHolder('')
+            this.selectedOption = null
+            if (this.filteredSelectedItems.length === 0 && this.localItems.length === 4) {
+              this.changeOptionsBorder('0px solid')
             }
           })
           this.$emit('input', this.selectedTags)
@@ -121,12 +145,40 @@ export default {
           return item !== tag
         }
       })
+      if (this.selectedTags.length === 0) {
+        this.$nextTick(()=> { this.resetPlaceHolder(this.placeHolder) })
+      }
       this.$nextTick(()=> {
-        this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
-        this.$refs.yynOptions.style.border = '1px solid #bdbdbd'
-
+        this.changeOptionsTop()
+        this.changeOptionsBorder('1px solid #bdbdbd')
       })
     },
+    resetPlaceHolder(value) {
+      this.$refs.yynInput.placeholder = value
+    },
+    changeOptionsTop() {
+      this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
+    },
+    changeOptionsBorder(value) {
+      this.$refs.yynOptions.style.border = value
+    },
+    closeOptions(e) {
+      if (!e.target.classList.contains('yyn-close-icon-tag') &&
+          !e.target.classList.contains('yyn-placeholder') &&
+          !e.target.classList.contains('yyn-item') &&
+          !e.target.classList.contains('yyn-tag')) {
+        this.optionsIsVisible = false
+      }
+    }
+  },
+  beforeMount() {
+    this.localItems = this.items
+  },
+  mounted() {
+    document.addEventListener('click', this.closeOptions.bind(this), true)
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.closeOptions)
   }
 }
 </script>
@@ -153,11 +205,12 @@ input:focus {
 .yyn-select {
   position: relative;
   width: 220px;
+
 }
 .yyn-placeholder {
   display: block;
   margin: 0;
-  padding: 3px;
+  padding: 3px 20px 3px 3px;
   width: -webkit-fill-available;
 }
 .yyn-options {
@@ -189,6 +242,7 @@ input:focus {
   background-color: #409eff;
   cursor: pointer;
 }
+
 .yyn-selected-tags {
   position: relative;
   display: flex;
@@ -210,6 +264,7 @@ input:focus {
   box-sizing: border-box;
   white-space: nowrap;
   box-sizing: border-box;
+  border-color: transparent;
   margin: 2px 0 2px 6px;
   max-width: 100%;
 
@@ -221,10 +276,17 @@ input:focus {
     cursor: pointer;
   }
 }
+.yyn-close-icon {
+  position: absolute;
+  right: 2px;
+  top: 6px;
+  cursor: pointer;
+}
 .yyn-selected-tags-wrap {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #bdbdbd;
   border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 </style>
