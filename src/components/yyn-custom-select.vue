@@ -101,6 +101,9 @@ export default {
           this.selectedTags.push(option)
           this.$nextTick(()=> {
             this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
+            if (this.filteredSelectedItems.length === 0) {
+              this.$refs.yynOptions.style.border = '0px solid'
+            }
           })
           this.$emit('input', this.selectedTags)
         }
@@ -120,6 +123,8 @@ export default {
       })
       this.$nextTick(()=> {
         this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
+        this.$refs.yynOptions.style.border = '1px solid #bdbdbd'
+
       })
     },
   }
