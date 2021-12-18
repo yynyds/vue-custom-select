@@ -171,4 +171,17 @@ input:focus {
   background-color: #409eff;
   cursor: pointer;
 }
+.yyn-selected-tags {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap
+}
+.yyn-selected-tags-wrap {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 </style>
