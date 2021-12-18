@@ -1,6 +1,6 @@
 <template>
   <div class="yyn-select">
-    <div class="yyn-selected-tags-wrap">
+    <div class="yyn-selected-tags-wrap" ref="yynTagsWrap">
       <div class="yyn-selected-tags" v-if="isMultiple">
           <span style="display: contents">
             <span
@@ -23,7 +23,7 @@
     </div>
     <div v-show="optionsIsVisible" class="yyn-options" ref="yynOptions" style="top: 28px;">
       <p
-          v-for="item in items"
+          v-for="item in filteredSelectedItems"
           :key="keyProp ? item[keyProp] : item"
           @click="selectOption(item)"
           class="yyn-item"
@@ -86,11 +86,21 @@ export default {
     optionsIsVisible: false,
     selectedTags: []
   }),
+  computed: {
+    filteredSelectedItems() {
+      return this.items.filter(item => {
+        return !this.selectedTags.includes(item)
+      })
+    }
+  },
   methods: {
     selectOption(option) {
       if (this.isMultiple) {
         if (!this.selectedTags.includes(option)) {
           this.selectedTags.push(option)
+          this.$nextTick(()=> {
+            this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
+          })
           this.$emit('input', this.selectedTags)
         }
       } else {
