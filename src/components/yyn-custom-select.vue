@@ -9,6 +9,7 @@
                 class="yyn-tag"
             >
               {{labelProp ? tag[labelProp] : tag}}
+              <i class="el-icon-error yyn-close-icon-tag"></i>
             </span>
           </span>
       </div>
