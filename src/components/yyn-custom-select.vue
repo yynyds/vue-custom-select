@@ -1,13 +1,26 @@
 <template>
   <div class="yyn-select">
-    <input
-        v-model="selectedOption"
-        class="yyn-placeholder"
-        :placeholder="placeHolder"
-        @click="optionsIsVisible = true"
-        ref="yynInput"
-        :readonly="!isFilterable"
-    >
+    <div class="yyn-selected-tags-wrap">
+      <div class="yyn-selected-tags" v-if="isMultiple">
+          <span style="display: contents">
+            <span
+                v-for="tag in selectedTags"
+                :key="keyProp ? tag[keyProp] : tag"
+                class="yyn-tag"
+            >
+              {{labelProp ? tag[labelProp] : tag}}
+            </span>
+          </span>
+      </div>
+      <input
+          v-model="selectedOption"
+          class="yyn-placeholder"
+          :placeholder="placeHolder"
+          @click="optionsIsVisible = true"
+          ref="yynInput"
+          :readonly="!isFilterable"
+      >
+    </div>
     <div v-show="optionsIsVisible" class="yyn-options" ref="yynOptions" style="top: 28px;">
       <p
           v-for="item in items"
@@ -71,12 +84,20 @@ export default {
   data: () => ({
     selectedOption: null,
     optionsIsVisible: false,
+    selectedTags: []
   }),
   methods: {
     selectOption(option) {
-      this.selectedOption = option[this.valueProp] ? option[this.valueProp] : option
-      this.$emit('input', option[this.valueProp] ? option[this.valueProp] : option)
-      this.optionsIsVisible = false
+      if (this.isMultiple) {
+        if (!this.selectedTags.includes(option)) {
+          this.selectedTags.push(option)
+          this.$emit('input', this.selectedTags)
+        }
+      } else {
+        this.selectedOption = option[this.valueProp] ? option[this.valueProp] : option
+        this.$emit('input', option[this.valueProp] ? option[this.valueProp] : option)
+        this.optionsIsVisible = false
+      }
     }
   }
 }
