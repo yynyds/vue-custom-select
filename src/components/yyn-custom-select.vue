@@ -9,7 +9,7 @@
                 class="yyn-tag"
             >
               {{labelProp ? tag[labelProp] : tag}}
-              <i class="el-icon-error yyn-close-icon-tag"></i>
+              <i class="el-icon-error yyn-close-icon-tag" @click="removeFromSelectedTagsList(tag)"></i>
             </span>
           </span>
       </div>
@@ -109,7 +109,19 @@ export default {
         this.$emit('input', option[this.valueProp] ? option[this.valueProp] : option)
         this.optionsIsVisible = false
       }
-    }
+    },
+    removeFromSelectedTagsList(tag) {
+      this.selectedTags = this.selectedTags.filter(item => {
+        if (this.keyProp) {
+          return item[this.keyProp] !== tag[this.keyProp]
+        } else {
+          return item !== tag
+        }
+      })
+      this.$nextTick(()=> {
+        this.$refs.yynOptions.style.top = (parseInt(this.$refs.yynTagsWrap.offsetHeight) + 3) + 'px'
+      })
+    },
   }
 }
 </script>
