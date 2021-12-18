@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section id="example-1">
+<!--    <section id="example-1">
       <h1>Example 1 (Single, Filterable)</h1>
       <hr>
       <div class="examples">
@@ -67,20 +67,30 @@
             :isMultiple="true"
         />
       </div>
-    </section>
+    </section>-->
+    <yyn-custom-select
+        v-model="myValue"
+        :placeHolder="'CustomSelect'"
+        :items="itemsExample"
+        :keyProp="'id'"
+        :labelProp="'title'"
+        :valueProp="'title'"
+        :isMultiple="true"
+        :isFilterable="true"
+    />
   </div>
 </template>
 
 <script>
 
-import CustomSelect from './components/CustomSelect'
+import YynCustomSelect from './components/yyn-custom-select'
 export default {
   name: 'App',
-  components: { CustomSelect },
+  components: { YynCustomSelect },
   data: () => ({
     // example 1
-    myValueInCS_1: null,
-    itemsExample1: [
+    myValue: null,
+    itemsExample: [
       {
         "id": 1,
         "title": "delectus aut autem",
@@ -102,33 +112,6 @@ export default {
         "completed": true
       }
     ],
-    // example 2
-    myValueInCS_2: null,
-    itemsExample2: [
-      {
-        "id": 1,
-        "name": "delectus aut autem",
-        "completed": false
-      },
-      {
-        "id": 2,
-        "name": "quis ut nam facilis et officia qui",
-        "completed": false
-      },
-      {
-        "id": 3,
-        "name": "fugiat veniam minus",
-        "completed": false
-      },
-      {
-        "id": 4,
-        "name": "et porro tempora",
-        "completed": true
-      }
-    ],
-    // example 3
-    myValueInCS_3: null,
-    itemsExample3: ['Test', 'Foo', 'Bar', 'Cat', 'Js', 'Btc'],
   })
 }
 </script>
